@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:lawers/core/theme/app_colors.dart';
-import 'package:lawers/features/home/presentation/widgets/header.dart' show Header;
-import 'package:lawers/features/home/presentation/widgets/on_going_cases.dart';
-import 'package:lawers/features/home/presentation/widgets/recent_activites.dart';
-import 'package:lawers/features/home/presentation/widgets/stats_cards.dart';
+import 'package:lawers/src/features/home/presentation/widgets/header.dart' show Header;
+import 'package:lawers/src/features/home/presentation/widgets/on_going_cases.dart';
+import 'package:lawers/src/features/home/presentation/widgets/recent_activites.dart';
+import 'package:lawers/src/features/home/presentation/widgets/stats_cards.dart';
 
 
 

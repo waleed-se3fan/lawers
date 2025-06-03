@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lawers/core/theme/app_colors.dart';
-import 'package:lawers/features/customerPage/presentation/views/customer_page_view.dart';
-import 'package:lawers/features/home/presentation/views/home_view.dart';
+import 'package:lawers/src/features/customerPage/presentation/views/customer_page_view.dart';
+import 'package:lawers/src/features/home/presentation/views/home_view.dart';
+import 'package:lawers/src/features/issues/presentation/view/lawsuits_view.dart';
+
+import 'core/data/cached/cache_helper.dart';
 
 void main() {
+    WidgetsFlutterBinding.ensureInitialized();
+
+  CacheHelper().init();
   runApp(const MyApp());
 }
 
@@ -12,73 +19,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: const MainScreen(),
-      theme: ThemeData(
-        fontFamily: 'Inter',
-        // تحديد الألوان الأساسية للتطبيق
-        primarySwatch: MaterialColor(
-          AppColors.primary.value,
-          <int, Color>{
-            50: AppColors.primary.withOpacity(0.1),
-            100: AppColors.primary.withOpacity(0.2),
-            200: AppColors.primary.withOpacity(0.3),
-            300: AppColors.primary.withOpacity(0.4),
-            400: AppColors.primary.withOpacity(0.5),
-            500: AppColors.primary,
-            600: AppColors.primaryDark,
-            700: AppColors.primaryDark,
-            800: AppColors.primaryDark,
-            900: AppColors.primaryDark,
-          },
-        ),
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: AppColors.primary,
-          primary: AppColors.primary,
-          secondary: AppColors.secondary,
-          surface: AppColors.surface,
-          background: AppColors.background,
-          
-        ),
-        scaffoldBackgroundColor: AppColors.background,
-        appBarTheme: const AppBarTheme(
-          backgroundColor: AppColors.surface,
-          foregroundColor: AppColors.textPrimary,
-          elevation: 0,
-          centerTitle: true,
-        ),
-        bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-          backgroundColor: AppColors.bottomNavBackground,
-          selectedItemColor: AppColors.bottomNavSelected,
-          unselectedItemColor: AppColors.bottomNavUnselected,
-          type: BottomNavigationBarType.fixed,
-          elevation: 8,
-        ),
-        cardTheme: CardTheme(
-          color: AppColors.surface,
-          elevation: 2,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-          ),
-        ),
-        inputDecorationTheme: InputDecorationTheme(
-          filled: true,
-          fillColor: AppColors.surfaceLight,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-            borderSide: const BorderSide(color: AppColors.border),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-            borderSide: const BorderSide(color: AppColors.border),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-            borderSide: const BorderSide(color: AppColors.primary, width: 2),
-          ),
-        ),
-      ),
+    return ScreenUtilInit(
+      designSize: const Size(375, 812), 
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (context, child) {
+        return  MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: const MainScreen(),
+       
+      );},
     );
   }
 }
@@ -96,16 +46,7 @@ class _MainScreenState extends State<MainScreen> {
   static const List<Widget> _pages = <Widget>[
     DashboardPage(),
     CustomersPage(),
-    Center(
-      child: Text(
-        'الملفات',
-        style: TextStyle(
-          fontSize: 24,
-          color: Color.fromRGBO(31, 41, 55, 1),
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-    ),
+   LawsuitsView(),
     Center(
       child: Text(
         'التقويم',
@@ -168,7 +109,7 @@ class _MainScreenState extends State<MainScreen> {
             BottomNavigationBarItem(
               icon: Icon(Icons.folder_outlined),
               activeIcon: Icon(Icons.folder_rounded),
-              label: 'الملفات',
+              label: 'القضايا',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.calendar_today_outlined),
