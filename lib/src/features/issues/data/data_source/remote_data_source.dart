@@ -65,22 +65,24 @@ class IssuesRemoteDataSourceImpl implements IssuesRemoteDataSource {
       var response = await dio.post(
         'issue/store',
         data: {
-          'caseNumber': caseNumber,
-          'caseTitle': caseTitle,
-          'caseType': caseType,
-          'courtName': courtName,
+          'customer_id': 1, // Using fixed customer_id as provided
+          'opponent_name': opponentName,
+          'opponent_type': opponentType,
+          'opponent_phone': opponentPhone,
+          'opponent_address': opponentAddress,
+          'opponent_nation': opponentNation,
+          'opponent_lawyer': opponentLawyerName,
+          'lawyer_phone': opponentLawyerPhone,
+          'court_name': courtName,
           'circle': circle,
-          'opponentName': opponentName,
-          'opponentType': opponentType,
-          'opponentPhone': opponentPhone,
-          'opponentAddress': opponentAddress,
-          'opponentNation': opponentNation,
-          'opponentLawyerName': opponentLawyerName,
-          'opponentLawyerPhone': opponentLawyerPhone,
-          'judgeName': judgeName,
-          'attorneyNumber': attorneyNumber,
-          'contractPrice': contractPrice,
+          'case_number': caseNumber,
+          'case_title': caseTitle,
+          'attorney_number': attorneyNumber,
+          'register_date': '2023-05-15', // Using fixed date as provided
+          'judge_name': judgeName,
+          'contract_price': double.tryParse(contractPrice) ?? 0.0,
           'notes': notes,
+          'case_category_id': 1, // Using fixed category_id as provided
         },
       );
       return Right(response);
