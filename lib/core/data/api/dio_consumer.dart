@@ -56,7 +56,7 @@ class DioConsumer extends ApiConsumer {
     bool isFormData = false,
   }) async {
     try {
-      final token = CacheHelper.getToken();
+      // final token = CacheHelper.getToken();
       final response = await dio.post(
         path,
         data:
@@ -66,7 +66,8 @@ class DioConsumer extends ApiConsumer {
           headers: {
             'Accept': 'application/vnd.api+json',
             'Content-Type': 'application/vnd.api+json',
-            'Authorization': 'Bearer $token',
+            'Authorization':
+                'Bearer 41|6KKerhEqQTsvQfZYMkGSULqXNQx5tgdyVeplmkd7c5c741f1',
           },
         ),
       );

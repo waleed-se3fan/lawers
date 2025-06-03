@@ -22,7 +22,10 @@ class LawsuitsView extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) {
-                    return const AddNewCaseView();
+                    return BlocProvider(
+                      create: (context) => IssuesBloc(),
+                      child: const AddNewCaseView(),
+                    );
                   },
                 ),
               );
