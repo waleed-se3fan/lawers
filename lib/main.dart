@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lawers/core/theme/app_colors.dart';
 import 'package:lawers/src/features/customerPage/presentation/views/customer_page_view.dart';
 import 'package:lawers/src/features/home/presentation/views/home_view.dart';
 import 'package:lawers/src/features/issues/presentation/view/lawsuits_view.dart';
+import 'package:lawers/src/features/revenues/domain/repositories/revenue_repository.dart';
+import 'package:lawers/src/features/revenues/domain/use_cases/add_revenue_usecase.dart';
+import 'package:lawers/src/features/revenues/domain/use_cases/delete_revenue_usecase.dart';
+import 'package:lawers/src/features/revenues/domain/use_cases/get_revenues_usecase.dart';
+import 'package:lawers/src/features/revenues/presentation/logic/bloc/revenue_bloc.dart';
+import 'package:lawers/src/features/revenues/presentation/view/revenues_view.dart';
 
 import 'core/data/cached/cache_helper.dart';
 
 void main() {
-    WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
 
   CacheHelper().init();
   runApp(const MyApp());
@@ -20,15 +27,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: const Size(375, 812), 
+      designSize: const Size(375, 812),
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) {
-        return  MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: const MainScreen(),
-       
-      );},
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          home: const MainScreen(),
+        );
+      },
     );
   }
 }
@@ -43,10 +50,11 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
 
-  static const List<Widget> _pages = <Widget>[
+  final List<Widget> _pages = <Widget>[
     DashboardPage(),
     CustomersPage(),
-   LawsuitsView(),
+    LawsuitsView(),
+    BlocProvider(create: (context) => RevenueBloc(), child: RevenuesView()),
     Center(
       child: Text(
         'التقويم',
@@ -92,9 +100,7 @@ class _MainScreenState extends State<MainScreen> {
             fontWeight: FontWeight.bold,
             fontSize: 12,
           ),
-          unselectedLabelStyle: const TextStyle(
-            fontSize: 12,
-          ),
+          unselectedLabelStyle: const TextStyle(fontSize: 12),
           items: const [
             BottomNavigationBarItem(
               icon: Icon(Icons.dashboard_rounded),
@@ -110,6 +116,11 @@ class _MainScreenState extends State<MainScreen> {
               icon: Icon(Icons.folder_outlined),
               activeIcon: Icon(Icons.folder_rounded),
               label: 'القضايا',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.attach_money_outlined),
+              activeIcon: Icon(Icons.attach_money_rounded),
+              label: 'المدفوعات',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.calendar_today_outlined),
