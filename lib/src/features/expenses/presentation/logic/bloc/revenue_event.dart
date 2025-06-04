@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:lawers/src/features/revenues/data/model/revenue_model.dart';
+import 'package:lawers/src/features/expenses/data/model/expense_model.dart';
 
 abstract class RevenueEvent extends Equatable {
   const RevenueEvent();

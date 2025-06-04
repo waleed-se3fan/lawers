@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:lawers/src/features/revenues/data/model/revenue_model.dart';
-import 'package:lawers/src/features/revenues/presentation/logic/bloc/revenue_bloc.dart';
-import 'package:lawers/src/features/revenues/presentation/logic/bloc/revenue_event.dart';
+import 'package:lawers/src/features/expenses/data/model/expense_model.dart';
+import 'package:lawers/src/features/expenses/presentation/logic/bloc/expense_bloc.dart';
+import 'package:lawers/src/features/expenses/presentation/logic/bloc/expense_event.dart';
 
-class AddRevenueView extends StatefulWidget {
-  const AddRevenueView({super.key});
+class AddExpenseView extends StatefulWidget {
+  const AddExpenseView({super.key});
 
   @override
-  State<AddRevenueView> createState() => _AddRevenueViewState();
+  State<AddExpenseView> createState() => _AddExpenseViewState();
 }
 
-class _AddRevenueViewState extends State<AddRevenueView> {
+class _AddExpenseViewState extends State<AddExpenseView> {
   final _formKey = GlobalKey<FormState>();
   final _clientNameController = TextEditingController();
   final _amountController = TextEditingController();
@@ -44,7 +44,7 @@ class _AddRevenueViewState extends State<AddRevenueView> {
 
   void _submitForm() {
     if (_formKey.currentState?.validate() ?? false) {
-      final revenue = RevenueModel(
+      final expense = ExpenseModel(
         categoryId: 1, // You might want to make this dynamic
         name: _clientNameController.text,
         amount: double.parse(_amountController.text),
@@ -57,7 +57,7 @@ class _AddRevenueViewState extends State<AddRevenueView> {
         userId: 1, // You might want to get this from auth
       );
 
-      context.read<RevenueBloc>().add(AddRevenueEvent(revenue));
+      context.read<ExpenseBloc>().add(AddExpenseEvent(expense));
       Navigator.pop(context);
     }
   }

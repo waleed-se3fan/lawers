@@ -5,12 +5,8 @@ import 'package:lawers/core/theme/app_colors.dart';
 import 'package:lawers/src/features/customerPage/presentation/views/customer_page_view.dart';
 import 'package:lawers/src/features/home/presentation/views/home_view.dart';
 import 'package:lawers/src/features/issues/presentation/view/lawsuits_view.dart';
-import 'package:lawers/src/features/revenues/domain/repositories/revenue_repository.dart';
-import 'package:lawers/src/features/revenues/domain/use_cases/add_revenue_usecase.dart';
-import 'package:lawers/src/features/revenues/domain/use_cases/delete_revenue_usecase.dart';
-import 'package:lawers/src/features/revenues/domain/use_cases/get_revenues_usecase.dart';
-import 'package:lawers/src/features/revenues/presentation/logic/bloc/revenue_bloc.dart';
-import 'package:lawers/src/features/revenues/presentation/view/revenues_view.dart';
+import 'package:lawers/src/features/expenses/presentation/logic/bloc/expense_bloc.dart';
+import 'package:lawers/src/features/expenses/presentation/view/expenses_view.dart';
 
 import 'core/data/cached/cache_helper.dart';
 
@@ -54,7 +50,7 @@ class _MainScreenState extends State<MainScreen> {
     DashboardPage(),
     CustomersPage(),
     LawsuitsView(),
-    BlocProvider(create: (context) => RevenueBloc(), child: RevenuesView()),
+    BlocProvider(create: (context) => ExpenseBloc(), child: ExpensesView()),
     Center(
       child: Text(
         'التقويم',

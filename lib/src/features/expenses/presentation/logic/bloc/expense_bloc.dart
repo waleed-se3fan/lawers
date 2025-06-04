@@ -2,37 +2,35 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:lawers/core/data/api/dio_consumer.dart';
-import 'package:lawers/src/features/revenues/data/data_source/remote_data_source.dart';
-import 'package:lawers/src/features/revenues/data/repositories/revenue_repository_impl.dart';
-import 'package:lawers/src/features/revenues/domain/use_cases/add_revenue_usecase.dart';
-import 'package:lawers/src/features/revenues/domain/use_cases/delete_revenue_usecase.dart';
-import 'package:lawers/src/features/revenues/domain/use_cases/get_revenues_usecase.dart';
-import 'package:lawers/src/features/revenues/presentation/logic/bloc/revenue_event.dart';
-import 'package:lawers/src/features/revenues/presentation/logic/bloc/revenue_state.dart';
+import 'package:lawers/src/features/expenses/data/data_source/remote_data_source.dart';
+import 'package:lawers/src/features/expenses/data/repositories/revenue_repository_impl.dart';
+import 'package:lawers/src/features/expenses/domain/use_cases/get_revenues_usecase.dart';
+import 'package:lawers/src/features/expenses/presentation/logic/bloc/expense_event.dart';
+import 'package:lawers/src/features/expenses/presentation/logic/bloc/expense_state.dart';
 
-class RevenueBloc extends Bloc<RevenueEvent, RevenueState> {
-  RevenueBloc() : super(RevenueInitial()) {
-    on<LoadRevenuesEvent>(_onLoadRevenues);
-    // on<AddRevenueEvent>(_onAddRevenue);
-    // on<DeleteRevenueEvent>(_onDeleteRevenue);
+class ExpenseBloc extends Bloc<ExpenseEvent, ExpenseState> {
+  ExpenseBloc() : super(ExpenseInitial()) {
+    on<LoadExpensesEvent>(_onLoadExpenses);
+    // on<AddExpenseEvent>(_onAddExpense);
+    // on<DeleteExpenseEvent>(_onDeleteExpense);
   }
 
-  FutureOr<void> _onLoadRevenues(
-    LoadRevenuesEvent event,
-    Emitter<RevenueState> emit,
+  FutureOr<void> _onLoadExpenses(
+    LoadExpensesEvent event,
+    Emitter<ExpenseState> emit,
   ) async {
-    final getRevenuesUseCase = GetRevenuesUseCase(
-      RevenueRepositoryImpl(
+    final getExpensesUseCase = GetExpensesUseCase(
+      ExpenseRepositoryImpl(
         remoteDataSource: RemoteDataSourceImpl(
           apiConsumer: DioConsumer(dio: Dio()),
         ),
       ),
     );
-    emit(RevenueLoading());
-    final result = await getRevenuesUseCase();
+    emit(ExpenseLoading());
+    final result = await getExpensesUseCase();
     result.fold(
-      (error) => emit(RevenueError(error.message)),
-      (revenues) => emit(RevenueLoaded(revenues)),
+      (error) => emit(ExpenseError(error.message)),
+      (expenses) => emit(ExpenseLoaded(expenses)),
     );
   }
 
