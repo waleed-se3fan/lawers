@@ -34,8 +34,21 @@ class LawsuitsView extends StatelessWidget {
         ],
       ),
       body: BlocProvider(
-        create: (context) => IssuesBloc()..getIssues(),
-        child: IssuesComponent(),
+        create: (context) => IssuesBloc()..add(GetIssuesEvent()), // Initial fetch
+        child: BlocBuilder<IssuesBloc, IssuesState>(
+          builder: (context, state) {
+            return RefreshIndicator(
+              onRefresh: () async {
+                // Dispatch event to fetch issues again
+                context.read<IssuesBloc>().add(GetIssuesEvent());
+                // Wait for the state to change to indicate loading is complete or failed
+                // This is a common pattern, but you might need to adjust based on your BLoC's state emissions
+                await context.read<IssuesBloc>().stream.firstWhere((newState) => newState is IssuesSuccess || newState is IssuesFailure || newState is IssuesInitial);
+              },
+              child: IssuesComponent(),
+            );
+          },
+        ),
       ),
     );
   }
